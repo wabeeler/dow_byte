@@ -14,13 +14,12 @@ Because this class uses ISO DOW designations **Monday = 1** and **Sunday = 7** a
 | Sunday | 0100 0000 | 64 |
 
 ## Methods
-#### set( array )
+#### set( mask )
 
 **Example**
 
 ```
-set(2)  // ==> 0000 0010 Saturday
-set(4)  // ==> 0000 1010 Thursday, Saturday
+set(32)  // ==> 0000 0010 Saturday
 ```
 
 ####get( type = [array|string] )
@@ -37,7 +36,8 @@ get('strng')  // ==> 0100 0010
 **Example**
 
 ```
-toggle(monday) // ==> before: 0100 0000 | after: 0000 0000
+toggle('monday') // ==> before: 0000 0000 | after: 0100 0000
+toggle('Thursday') // ==> before: 0100 0000 | after: 0100 1000
 ```
 
 #### reset()

@@ -1,0 +1,19 @@
+{
+  "name": "dow_byte",
+  "version": "0.0.1",
+  "description": "Javascript Class which uses a byte to represent boolean flags for each DOW",
+  "main": "dow.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wabeeler/dow_byte.git"
+  },
+  "author": "Rob Walsh & Brad Beeler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wabeeler/dow_byte/issues"
+  },
+  "homepage": "https://github.com/wabeeler/dow_byte#readme"
+}

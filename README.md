@@ -23,6 +23,7 @@ set(2)  // ==> 0000 0010 Saturday
 ```
 
 #### setMask( string )
+Set mask will clear any existing values and is desiged to 
 
 **Example**
 

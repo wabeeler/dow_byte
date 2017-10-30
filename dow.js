@@ -16,6 +16,7 @@ function DOW (init) {
     };
 
     self.length = Object.keys(self.days).length;
+    self.validStringLength = 8; // Allow for two bits
 
     // return an array of Booleans for each Bit
     self.toArr = function() {
@@ -51,7 +52,7 @@ function DOW (init) {
     self.validMask( mask ) {
       if( typeof mask === 'string' && mask.match(/[0|1|\s]+/g) ) {
         // check length with spaces removed
-        if( mast.repalce(/\s/g, '').length > (self.length + 1)
+        if( mast.repalce(/\s/g, '').length > (self.validStringLength)
         return true;
       }
 

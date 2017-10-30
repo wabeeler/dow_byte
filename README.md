@@ -31,6 +31,17 @@ setMask('01000010') // ==> Monday, Saturday
 setMask('0010 0100') // ==> Tuesday, Friday
 ```
 
+####isDaySet( string )
+
+**Example**
+
+```
+set('monday); // ==> 0100 0000
+set(2); // ==> 0100 0010
+isDaySet('Monday') // ==> true
+isDaySet('friday') // ==> false
+```
+
 ####get( type = [array|string] )
 
 **Example**

@@ -5,21 +5,30 @@ Because this class uses ISO DOW designations **Monday = 1** and **Sunday = 7** a
 
 | Day  | Bit | Decimal |
 |---|---|---|
-| Monday | 0000 0001 | 1 |
-| Tuesday | 0000 0010 | 2|
-| Wednesday | 0000 0100 | 4 |
+| Sunday | 0000 0001 | 1 |
+| Saturday | 0000 0010 | 2|
+| Friday | 0000 0100 | 4 |
 | Thursday | 0000 1000 | 8 |
-| Friday | 0001 0000 | 16 |
-| Saturday | 0010 0000 | 32 |
-| Sunday | 0100 0000 | 64 |
+| Wednesday | 0001 0000 | 16 |
+| Tuesday | 0010 0000 | 32 |
+| Monday | 0100 0000 | 64 |
 
 ## Methods
-#### set( mask )
+#### set( int )
 
 **Example**
 
 ```
-set(32)  // ==> 0000 0010 Saturday
+set(2)  // ==> 0000 0010 Saturday
+```
+
+#### setMask( string )
+
+**Example**
+
+```
+setMask('01000010') // ==> Monday, Saturday
+setMask('0010 0100') // ==> Tuesday, Friday
 ```
 
 ####get( type = [array|string] )

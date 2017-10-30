@@ -70,6 +70,22 @@ function DOW (init) {
             } else {
                 return self.dow = val;
             }
+        },
+        setMask: function(mask) {
+          if( typeof mask !== 'string' || !mask.match(/[0|1|\s]+/g) return false;
+
+          // eliminate spaces
+          let mskStr = mask.replace(/\s/g,'');
+
+          self.reset();
+
+          for( var i = max.length; i >= 0; i-- ) {
+            if( mask[i] === '1' ) {
+              self.dow[i] = 1;
+            }
+          }
+
+          return true;
         }
     };
 

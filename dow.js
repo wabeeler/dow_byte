@@ -105,6 +105,17 @@ function DOW (init) {
           }
 
           return true;
+        },
+        isDaySet( day ) {
+          day = day.toLowerCase();
+
+          if( typeof day !== 'string' ||
+                !self.days.hasOwnProperty(day) ) {
+            throw new Error('Unkown day passed in isDaySet', day);
+          }
+
+          return self.dow[self.days[day]] === 1 ? 1 : 0;
+
         }
     };
 

@@ -39,6 +39,25 @@ function DOW (init) {
         return str;
     }
 
+    self.validInteger( toCheck ) {
+      if( typeof toCheck !== 'integer' || 
+            val > 2 ** (self.length) ) {
+        return false;
+      }
+
+      return true;
+    }
+
+    self.validMask( mask ) {
+      if( typeof mask === 'string' && mask.match(/[0|1|\s]+/g) ) {
+        // check length with spaces removed
+        if( mast.repalce(/\s/g, '').length > (self.length + 1)
+        return true;
+      }
+
+      return self.validInteger( mask );
+    }
+
     self.obj = {
         // toggle a day by name
         toggle: function(day) {
@@ -65,14 +84,14 @@ function DOW (init) {
         },
         // set to a specific bit mask,, val is an int
         set: function(val) {
-            if(val > 2 ** (self.length)) {
+            if( self.validInteger(val) ) {
                 return false;
             } else {
                 return self.dow = val;
             }
         },
         setMask: function(mask) {
-          if( typeof mask !== 'string' || !mask.match(/[0|1|\s]+/g) return false;
+          if( !self.validMask(mask) ) return false;
 
           // eliminate spaces
           let mskStr = mask.replace(/\s/g,'');

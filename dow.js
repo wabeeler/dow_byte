@@ -40,16 +40,16 @@ function DOW (init) {
         return str;
     }
 
-    self.validInteger( toCheck ) {
+    self.validInteger = function( toCheck ) {
       if( typeof toCheck !== 'integer' || 
-            val > 2 ** (self.length) ) {
+            val > (2 ^ self.length) ) {
         return false;
       }
 
       return true;
     }
 
-    self.validMask( mask ) {
+    self.validMask = function( mask ) {
       if( typeof mask === 'string' && mask.match(/[0|1|\s]+/g) ) {
         // check length with spaces removed
         if( mast.repalce(/\s/g, '').length > (self.validStringLength)

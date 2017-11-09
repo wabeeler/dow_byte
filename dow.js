@@ -1,129 +1,149 @@
 function DOW (init) {
 
-    var self = this;
+  var self = this;
 
-    self.dow = new Uint8Array(8);
+  self.dow = 0;
 
-    // Put Monday on the left, and sunday on the right
-    self.days = {
-        "sunday": 1,
-        "saturday": 2,
-        "friday": 4,
-        "thursday": 8,
-        "wednesday": 16,
-        "tuesday": 32,
-        "monday": 64
-    };
+  // Put Monday on the left, and sunday on the right
+  self.days = {
+    "sunday": 1,
+    "saturday": 2,
+    "friday": 4,
+    "thursday": 8,
+    "wednesday": 16,
+    "tuesday": 32,
+    "monday": 64
+  };
 
-    self.length = Object.keys(self.days).length;
-    self.validStringLength = 8; // Allow for two bits
+  self.length = Object.keys(self.days).length;
+  self.validStringLength = 8; // Allow for two bits
 
-    // return an array of Booleans for each Bit
-    self.toArr = function() {
-        var arr = [];
-        var shift = self.dow;
-        for(i = 0; i < self.length; i++) {
-            shift >>>= 1;
-            arr.push(Boolean(shift & 1));
-        }
-        return arr;
-    };
+  // return an array of Booleans for each Bit
+  self.toArr = function() {
+    var arr = [];
+    var shift = self.dow;
+    for(i = 0; i < self.length; i++) {
+      shift >>>= 1;
+      arr.push(Boolean(shift & 1));
+    }
+    return arr;
+  };
 
-    // return a string of binary 
-    self.toStr = function() {
-        var str = self.dow.toString(2);
+  // return a string of binary 
+  self.toStr = function() {
+    var str = self.dow.toString(2);
 
-        while(str.length < self.length) {
-            str = '0' + str;
-        }
-
-        return str;
+    while(str.length < self.length) {
+      str = '0' + str;
     }
 
-    self.validInteger( toCheck ) {
-      if( typeof toCheck !== 'integer' || 
-            val > 2 ** (self.length) ) {
+    return str;
+  }
+
+  self.validInteger = function( toCheck ) {
+    if( typeof toCheck !== 'number' || 
+      val > Math.pow(2, self.length) ) {
         return false;
       }
 
-      return true;
-    }
+    return true;
+  }
 
-    self.validMask( mask ) {
-      if( typeof mask === 'string' && mask.match(/[0|1|\s]+/g) ) {
-        // check length with spaces removed
-        if( mast.repalce(/\s/g, '').length > (self.validStringLength)
+  self.validMask = function( mask ) {
+    if( typeof mask === 'string' && /[0|1|\s]+/g.test(mask) ) {
+      // check length with spaces removed
+      if( mask.replace(/\s/g, '').length <= (self.validStringLength) ) {
         return true;
       }
-
-      return self.validInteger( mask );
     }
 
-    self.obj = {
-        // toggle a day by name
-        toggle: function(day) {
-            self.dow = self.dow ^ self.days[day.toLowerCase()];
-            return self.dow;
-        },
-        // wipeout the whole bit mask
-        reset: function() {
-            return self.dow = self.dow  & 0;
-        },
-        // return in a given format
-        get: function(type) {
-            type = type || '';
-            switch(type.toLowerCase()) {
-                case 'string':
-                    return self.toStr();
-                    break;
-                case 'array': 
-                    return self.toArr();
-                    break
-                default:
-                    return self.dow;
-            }
-        },
-        // set to a specific bit mask,, val is an int
-        set: function(val) {
-            if( self.validInteger(val) ) {
-                return false;
-            } else {
-                return self.dow = val;
-            }
-        },
-        setMask: function(mask) {
-          if( !self.validMask(mask) ) return false;
+    return self.validInteger( mask );
+  }
 
-          // eliminate spaces
-          let mskStr = mask.replace(/\s/g,'');
+  self.setInt = function(val) {
+    if( self.validInteger(val) ) {
+      return false;
+    } else {
+      return self.dow = val;
+    }
+  }
 
-          self.reset();
+  self.setMask = function(mask) {
+    if( !self.validMask(mask) ) return false;
 
-          for( var i = max.length; i >= 0; i-- ) {
-            if( mask[i] === '1' ) {
-              self.dow[i] = 1;
-            }
-          }
+    // eliminate spaces
+    let mskStr = mask.replace(/\s/g,'');
 
-          return true;
-        },
-        isDaySet( day ) {
-          day = day.toLowerCase();
+    // Because we are calling another method inside of the return obj
+    // have to use this, not the parent of self
+    self.reset();
 
-          if( typeof day !== 'string' ||
-                !self.days.hasOwnProperty(day) ) {
-            throw new Error('Unkown day passed in isDaySet', day);
-          }
+    let x = parseInt(mask, 2);
 
-          return self.dow[self.days[day]] === 1 ? 1 : 0;
+    if( !isNaN(x) ) {
+      self.dow = x;
+    }
 
+    return true;
+  }
+
+  self.reset = function() {
+    return self.dow = 0;
+  }
+
+  self.obj = {
+    // toggle a day by name
+    toggle: function(day) {
+      self.dow = self.dow ^ self.days[day.toLowerCase()];
+      return self.dow;
+    },
+    // wipeout the whole bit mask
+    reset: function() {
+      return self.reset();
+    },
+    // return in a given format
+    get: function(type) {
+      type = type || '';
+      switch(type.toLowerCase()) {
+        case 'string':
+          return self.toStr();
+          break;
+        case 'array': 
+          return self.toArr();
+          break
+        default:
+          return self.dow;
+      }
+    },
+    // set to a specific bit mask,, val is an int
+    set: function(val) {
+      if( typeof val === 'number' ) {
+        setInt(val);
+      }
+      else {
+        setMask(val);
+      }
+    },
+    isDaySet( day ) {
+      if( typeof day !== 'string' ||
+        !self.days.hasOwnProperty(day.toLowerCase()) ) {
+          throw new Error('Unkown day passed in isDaySet', day);
         }
-    };
 
-    if(init !== undefined) {
-        self.obj.set(init);
+      let index = Math.log2(self.days[day.toLowerCase()]);
+
+      return !!(self.dow & (1 << index));
     }
+  };
 
-    return self.obj;
+  if(init !== undefined) {
+    self.obj.set(init);
+  }
+
+  return self.obj;
 
 };
+
+if( typeof module === 'object' ) {
+  module.exports = DOW;
+}

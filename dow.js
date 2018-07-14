@@ -42,7 +42,7 @@ function DOW (init) {
 
   self.validInteger = function( toCheck ) {
     if( typeof toCheck !== 'number' || 
-      val > Math.pow(2, self.length) ) {
+      toCheck > Math.pow(2, self.length) ) {
         return false;
       }
 

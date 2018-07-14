@@ -61,7 +61,7 @@ function DOW (init) {
   }
 
   self.setInt = function(val) {
-    if( self.validInteger(val) ) {
+    if( !self.validInteger(val) ) {
       return false;
     } else {
       return self.dow = val;
